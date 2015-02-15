@@ -3,5 +3,5 @@
 */
 
 ///Determine container storage size for universal Variant node
-#define INSTANTJSON_VARIANT_CONTAINER_SIZE (16)
+#define INSTANTJSON_VARIANT_CONTAINER_SIZE (24)
 

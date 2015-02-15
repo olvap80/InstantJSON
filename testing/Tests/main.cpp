@@ -6,6 +6,6 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    cout << "InstantJSON" << endl;
     return 0;
 }

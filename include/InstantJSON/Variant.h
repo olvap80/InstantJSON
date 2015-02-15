@@ -5,7 +5,7 @@
 #ifndef InstantJSON_Variant_HDR
 #define InstantJSON_Variant_HDR
 
-#include "details/Container.h"
+#include "Details/Container.h"
 
 namespace InstantJSON{
 

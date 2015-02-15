@@ -1,5 +1,6 @@
 # IDE specific stuff
 *.layout
+*.depend
 
 # Build results
 [Bb]in/
