@@ -13,7 +13,9 @@
 namespace InstantJSON{ namespace Details{
 
 union Container{
+    ///Minimal addressable unit
     typedef std::uint8_t Byte;
+
     ///Type to physically hold integers
     typedef std::int_least32_t Int;
     ///Type to physically hold unsigned integers
@@ -59,6 +61,7 @@ union Container{
     };
 
     ///Type of item encapsulated in the container
+    /** Match corresponding type byte of each possible variant */
     Byte Type;
 
     ///Hold boolean values
@@ -90,6 +93,7 @@ union Container{
         Byte Utf8[ByteCount-1];
     } ShortString;
 
+
     ///Use this struct to contain long strings
     struct LongStringData{
         LongStringData() : refCount(0) {}
@@ -107,7 +111,10 @@ union Container{
     struct{
         ///Type of string item encapsulated in the container (force alignment)
         /** Set to for ShortString*/
-        std::uint8_t Type;
+        Byte Type;
+
+        ///TBD
+        Word Hash;
 
         LongStringData* Data;
     } LongString;
