@@ -12,6 +12,29 @@ namespace InstantJSON{
 
 class Variant{
 public:
+    ///Map to JSON types
+    enum Type{
+        TypeUndefined,
+        TypeNull,
+        TypeBoolean,
+        TypeNumber,
+        TypeString,
+        TypeArray,
+        TypeObject,
+
+        TypeTotalCount
+    };
+
+    ///Map to JS like typed
+    enum JSType{
+        JSTypeUndefined,
+        JSTypeBoolean,
+        JSTypeNumber,
+        JSTypeString,
+        JSTypeObject,
+
+        JSTypeTotalCount
+    };
 
 private:
 

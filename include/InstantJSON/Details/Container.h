@@ -12,68 +12,110 @@
 
 namespace InstantJSON{ namespace Details{
 
-
-struct LongString{
-    ///Number of bytes in string tail
-    std::size_t ByteCount;
-
-    ///Bytes pointer
-    std::uint8_t* Utf8Ptr;
-};
-
-
 union Container{
-    ///Types for items inside container
+    typedef std::uint8_t Byte;
+    ///Type to physically hold integers
+    typedef std::int_least32_t Int;
+    ///Type to physically hold unsigned integers
+    typedef std::uint_least32_t UInt;
+    ///Type to physically hold double precision float
+    typedef double Double;
+
+    ///Natural machine word
+    typedef unsigned Word;
+
+    enum{
+        ///Number of words
+        WordCount = (INSTANTJSON_VARIANT_CONTAINER_MINIMUM_SIZE + sizeof(Word)-1)/ sizeof(Word),
+        ByteCount = sizeof(Word) * WordCount
+    };
+
+    ///Allocate minimum space in bytes (union with all types)
+    Byte SpaceAsBytes[ByteCount];
+
+    ///Allocate minimum space in Words (union with all types)
+    Word SpaceAsWords[WordCount];
+
+    ///Types for items inside container (internal represetation)
     enum ItemType{
+        ItemTypeUndefined,
+
+        ItemTypeNull,
+
+        ItemTypeBooleanTrue,
+        ItemTypeBooleanFalse,
+
         ItemTypeInt,
         ItemTypeUInt,
         ItemTypeDouble,
+
         ItemTypeShortString,
         ItemTypeLongString,
-        ItemTypeTotalItems
+
+        ItemTypeArray,
+        ItamTypeObject,
+
+        ItemTypeTotalCount
     };
 
-    ///Allocate minimum space
-    std::uint8_t ReserveSpace[INSTANTJSON_VARIANT_CONTAINER_SIZE];
-
     ///Type of item encapsulated in the container
-    std::uint8_t Type;
+    Byte Type;
 
-    //numeric types
+    ///Hold boolean values
+
+    ///Hold numeric types
     struct{
         ///Type of item encapsulated in the container (force alignment)
-        /** One of  */
-        std::uint8_t NumberType;
+        /** One of ItemTypeInt, ItemTypeUInt, ItemTypeDouble*/
+        Byte NumberType;
 
         //Items
         union{
-            std::int_least32_t Int;
+            Int IntValue;
 
-            std::uint_least32_t UInt;
+            UInt UIntValue;
 
-            double Double;
+            Double DoubleValue;
         };
     } Number;
 
+
+    ///Hold short string that fits into container size
     struct{
         ///Type of string item encapsulated in the container (force alignment)
         /** Set to for ShortString*/
-        std::uint8_t Type;
+        Byte Type;
 
-        ///Bytes
-        std::uint8_t Utf8[INSTANTJSON_VARIANT_CONTAINER_SIZE-1];
+        ///Bytes of the string in place
+        Byte Utf8[ByteCount-1];
     } ShortString;
 
+    ///Use this struct to contain long strings
+    struct LongStringData{
+        LongStringData() : refCount(0) {}
+        ///Number of references to this object
+        int refCount;
+
+        ///Number of bytes in string tail
+        std::size_t ByteCount;
+
+        ///Bytes pointer
+        Byte* Utf8Ptr;
+    };
+
+    ///Hold long string that does not fits into container size
     struct{
         ///Type of string item encapsulated in the container (force alignment)
         /** Set to for ShortString*/
         std::uint8_t Type;
 
-        LongString* Data;
+        LongStringData* Data;
     } LongString;
 };
 
-static_assert(sizeof(Container) == INSTANTJSON_VARIANT_CONTAINER_SIZE, "Container does not fit into INSTANTJSON_VARIANT_CONTAINER_SIZE");
+static_assert(sizeof(Container) <= INSTANTJSON_VARIANT_CONTAINER_MINIMUM_SIZE, "Container does not fit into INSTANTJSON_VARIANT_CONTAINER_MINIMUM_SIZE");
+static_assert(sizeof(Container) == Container::ByteCount, "Container size is calculated wrong");
+static_assert(sizeof(Container::SpaceAsBytes) == sizeof(Container::SpaceAsWords), "Container representations do not fit");
 
 
 }} //namespace InstantJSON::Details
