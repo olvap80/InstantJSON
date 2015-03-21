@@ -1,5 +1,5 @@
-/**\file InstantJSON/ConfigurationOptions.h
-*  \brief
+/**@file InstantJSON/ConfigurationOptions.h
+*  @brief
 */
 
 ///Determine container storage size for universal Variant node

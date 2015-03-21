@@ -1,5 +1,5 @@
-/**\file InstantJSON/Details/Container.h
-*  \brief
+/**@file InstantJSON/Details/Container.h
+*  @brief
 */
 
 #ifndef InstantJSON_Container_HDR
@@ -27,8 +27,9 @@ union Container{
     typedef unsigned Word;
 
     enum{
-        ///Number of words
+        ///Number of words in the Container
         WordCount = (INSTANTJSON_VARIANT_CONTAINER_MINIMUM_SIZE + sizeof(Word)-1)/ sizeof(Word),
+        ///Number of bytes in the Container
         ByteCount = sizeof(Word) * WordCount
     };
 

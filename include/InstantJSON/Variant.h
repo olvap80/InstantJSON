@@ -1,5 +1,5 @@
-/**\file InstantJSON/Variant.h
-*  \brief
+/**@file InstantJSON/Variant.h
+*  @brief
 */
 
 #ifndef InstantJSON_Variant_HDR
@@ -15,9 +15,11 @@ public:
     ///Map to JSON types
     enum Type{
         TypeUndefined,
+        TypeError,
         TypeNull,
         TypeBoolean,
-        TypeNumber,
+        TypeInteger,
+        TypeReal,
         TypeString,
         TypeArray,
         TypeObject,
@@ -25,9 +27,10 @@ public:
         TypeTotalCount
     };
 
-    ///Map to JS like typed
+    ///Map to JS like types
     enum JSType{
         JSTypeUndefined,
+        JSTypeError,
         JSTypeBoolean,
         JSTypeNumber,
         JSTypeString,
@@ -36,8 +39,14 @@ public:
         JSTypeTotalCount
     };
 
-private:
+    template<class T>
+    T As() const;
 
+    template<class T>
+    bool To(T& outResult);
+
+private:
+    Details::Container container;
 };
 
 
