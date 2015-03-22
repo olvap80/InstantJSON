@@ -44,7 +44,8 @@ public:
     template<class Itr>
     bool OnFragment(Itr dataBegin, Itr dataEnd);
 
-    bool OnDataCompleted();
+    ///Sign that there are no more fragments
+    bool OnFragmentsCompleted();
 
 private:
 
