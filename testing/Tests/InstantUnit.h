@@ -7,8 +7,8 @@ Simple usage sample:
     IU_TEST("My test name"){
         //Optional setup statements
         ...
-        //Checks and asserts
-        ... //those like IU_CHECK, IU_IS_EQUAL, etc
+        //Checks and asserts (those like IU_CHECK, IU_IS_EQUAL, etc)
+        ...
         //Optional teardown (cleanup)
         ...
         //Note: it is responsibility of the developer to ensure
@@ -38,6 +38,19 @@ More complex sample (please notice how setup and teardown are located):
     }
 
 @endcode
+
+Here test suite is not only a collection of test cases but also a way
+to surround every test case in the collection with setup and teardown code.
+
+Setup code from the test suite is executed before each test case like it is
+pasted directly before the test case body. You can declare variables in setup
+and they will be visible from test case body.
+
+Teardown code from the test suite is executed after each test case like it is
+pasted directly after the test case body. Teardown code is still automatically
+executed even in case of exception in a test case body.
+Every variable declared in Setup code is visible from Teardown code.
+
 */
 
 #ifndef INSTANTUNIT_HDR_
