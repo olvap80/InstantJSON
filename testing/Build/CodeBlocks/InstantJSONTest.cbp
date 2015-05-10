@@ -39,7 +39,7 @@
 		<Unit filename="../../../include/InstantJSON/Details/Container.h" />
 		<Unit filename="../../../include/InstantJSON/Parser.h" />
 		<Unit filename="../../../include/InstantJSON/Variant.h" />
-		<Unit filename="../../Tests/NanoUnit.h" />
+		<Unit filename="../../Tests/InstantUnit.h" />
 		<Unit filename="../../Tests/main.cpp" />
 		<Extensions>
 			<envvars />
