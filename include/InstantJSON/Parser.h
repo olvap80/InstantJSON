@@ -37,10 +37,10 @@ public:
     template<class Itr>
     bool Parse(Itr dataBegin, Itr dataEnd);
 
-    ///Parse data fragmet of count bytes
+    ///Parse data fragment of count bytes
     bool OnFragment(const char* data, std::size_t count);
 
-    ///Parse data fragmet from dataBegin to dataEnd
+    ///Parse data fragment from dataBegin to dataEnd
     template<class Itr>
     bool OnFragment(Itr dataBegin, Itr dataEnd);
 
